@@ -3,36 +3,16 @@ import './App.css'
 import './css/pure-min.css'
 import './css/side-menu.css'
 
-import listAuthors from './services/authors/authors.js'
+import AutorBox from './Autor'
 
 class App extends Component {
 
-  constructor() {
-    super()
-
-    this.state = {
-      lista: [{}]
-    }
-  }
-
-  componentWillMount(){
-    const self = this;
-    
-    listAuthors()
-    .then(function(res){
-      self.setState({
-        lista:res
-      })
-    })
-  }
-
   render() {
-    return (
-      <div id="layout">
-          { /* Menu toggle */ }
+    return <div id="layout">
+        {/* Menu toggle */}
         <a href="#menu" id="menuLink" className="menu-link">
-          { /* Hamburger icon */ }
-          <span></span>
+          {/* Hamburger icon */}
+          <span />
         </a>
 
         <div id="menu">
@@ -40,9 +20,15 @@ class App extends Component {
             <a className="pure-menu-heading" href="#">Company</a>
 
             <ul className="pure-menu-list">
-              <li className="pure-menu-item"><a href="#" className="pure-menu-link">Home</a></li>
-              <li className="pure-menu-item"><a href="#" className="pure-menu-link">Author</a></li>
-              <li className="pure-menu-item"><a href="#" className="pure-menu-link">Book</a></li >
+              <li className="pure-menu-item">
+                <a href="#" className="pure-menu-link">Home</a>
+              </li>
+              <li className="pure-menu-item">
+                <a href="#" className="pure-menu-link">Author</a>
+              </li>
+              <li className="pure-menu-item">
+                <a href="#" className="pure-menu-link">Book</a>
+              </li>
             </ul>
           </div>
         </div>
@@ -51,53 +37,9 @@ class App extends Component {
           <div className="header">
             <h1>Cadastro de Autor </h1>
           </div>
-          <div className="content" id="content">
-            <div className="pure-form pure-form-aligned">
-              <form className="pure-form pure-form-aligned">
-                <div className="pure-control-group">
-                  <label htmlFor="nome">Nome</label> 
-                  <input id="nome" type="text" name="nome" value=""  />                  
-                </div>
-                <div className="pure-control-group">
-                  <label htmlFor="email">Email</label> 
-                  <input id="email" type="email" name="email" value=""  />                  
-                </div>
-                <div className="pure-control-group">
-                  <label htmlFor="senha">Senha</label> 
-                  <input id="senha" type="password" name="senha"  />                                      
-                </div>
-                <div className="pure-control-group">                                  
-                  <label></label> 
-                  <button type="submit" className="pure-button pure-button-primary">Gravar</button>                                    
-                </div>
-              </form>
-            </div>  
-            <div>            
-              <table className="pure-table">
-                <thead>
-                  <tr>
-                    <th>Nome</th>
-                    <th>email</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  { 
-                    this.state.lista.map((author) => {
-                      return (
-                        <tr key={author.id}>
-                          <td>{author.nome}</td>
-                          <td>{author.email}</td>
-                        </tr>
-                      )
-                    })
-                  }
-                </tbody>
-              </table> 
-            </div>             
-          </div>
-        </div>     
+          <AutorBox></AutorBox>  
+        </div>
       </div>
-    );
   }
 }
 

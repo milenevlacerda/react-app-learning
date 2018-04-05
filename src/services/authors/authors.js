@@ -1,8 +1,12 @@
 import Http from '../request'
 
-const listAuthors = () => {
+export const listAuthors = () => {
   return Http.get('/autores')
   .then(res => res.data)
 }
 
-export default listAuthors
+export const createAuthor = author => {
+  return Http.post("/autores", author)
+  .then(res => res.data);
+};
+
