@@ -6,7 +6,8 @@ export const listAuthors = () => {
 }
 
 export const createAuthor = author => {
+  
   return Http.post("/autores", author)
-  .then(res => res.data);
+  .then(res => res.data)
 };
 

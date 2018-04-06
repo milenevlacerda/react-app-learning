@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import PubSub from 'pubsub-js'
 
-import { listAuthors } from "./services/authors/authors.js";
+import { listAuthors } from "./services/authors/authors.js"
 import { createAuthor } from "./services/authors/authors.js"
+import ErrorHandler from './ErrorHandler'
 
 import InputCustomizado from './components/InputCustomizado/InputCustomizado'
 import BotaoSubmit from'./components/BotaoSubmit/BotaoSubmit'
@@ -17,39 +18,51 @@ class FormularioAutor extends Component {
   constructor() {
     super();
 
-    this.state = { nome: "", email: "", senha: "" };
+    this.state = { nome: "", email: "", senha: "" }
 
-    this.submitForm = this.submitForm.bind(this);
-    this.setName = this.setName.bind(this);
-    this.setEmail = this.setEmail.bind(this);
-    this.setPass = this.setPass.bind(this);
+    this.submitForm = this.submitForm.bind(this)
+    this.setName = this.setName.bind(this)
+    this.setEmail = this.setEmail.bind(this)
+    this.setPass = this.setPass.bind(this)
   }
 
   submitForm(event) {
-    event.preventDefault();
-    let self = this;
-    console.log("Dados sendo enviados");
+    event.preventDefault()
+    let self = this
+    console.log("Dados sendo enviados")
 
-    let author = { nome: this.state.nome, email: this.state.email, senha: this.state.senha };
+    let author = { nome: this.state.nome, email: this.state.email, senha: this.state.senha }   
+    
 
-    createAuthor(author).then(res => {
-        console.log("cadastrado com sucesso!");
+    createAuthor(author)
+    
+      .then(res => {
+        console.log("cadastrado com sucesso!")
         PubSub.publish('atualiza-lista-autores', res)
-      }, err => {
-        console.log(err);
-      });
+        
+        self.setState({
+          nome:'', 
+          email: '', 
+          senha:''
+        })
+
+      }).catch(err => {
+        if (err.response.status === 400) {
+          new ErrorHandler().showErrors(err.response.data)
+        }
+      })
   }
 
   setName(event) {
-    this.setState({ nome: event.target.value });
+    this.setState({ nome: event.target.value })
   }
 
   setEmail(event) {
-    this.setState({ email: event.target.value });
+    this.setState({ email: event.target.value })
   }
 
   setPass(event) {
-    this.setState({ senha: event.target.value });
+    this.setState({ senha: event.target.value })
   }
 
   render() {
@@ -88,7 +101,7 @@ class TabelaAutores extends Component {
             return <tr key={author.id}>
                 <td>{author.nome}</td>
                 <td>{author.email}</td>
-              </tr>;
+              </tr>
           })}
         </tbody>
       </table>
@@ -106,22 +119,22 @@ AutorBox
 export default class AutorBox extends Component {
   
   constructor() {
-    super();
+    super()
 
     this.state = {lista: []}
   }
 
-  componentWillMount() {
-    let self = this;
+  componentDidMount() {
+    let self = this
 
     listAuthors().then(res => {
       self.setState({
         lista:res
       })
-    });
+    })
 
     PubSub.subscribe('atualiza-lista-autores', (topico, listaAutores) => {
-      self.setState({ lista: listaAutores });
+      self.setState({ lista: listaAutores })
     })
   }
 
@@ -129,6 +142,6 @@ export default class AutorBox extends Component {
     return <div className="content" id="content">
         <FormularioAutor/>
         <TabelaAutores lista={this.state.lista}/>
-      </div>;
+      </div>
   }
 }
