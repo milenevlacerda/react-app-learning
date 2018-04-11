@@ -17,9 +17,9 @@ class App extends Component {
 
         <div id="menu">
           <div className="pure-menu">
-            <a className="pure-menu-heading" href="#">
+            <Link to="/" className="pure-menu-heading">
               Company
-            </a>
+            </Link>
 
             <ul className="pure-menu-list">
               <li className="pure-menu-item">

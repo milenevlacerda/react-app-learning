@@ -11,12 +11,13 @@ import registerServiceWorker from './registerServiceWorker'
 
 ReactDOM.render(
   <BrowserRouter>
-    <Switch>
-      <Route exact path="/" component={App} />
-      {/* <Route path="/" component={Home} /> */}
-      <Route path="/author" component={AutorBox} />
-      <Route path="/book" />
-    </Switch>
+    <App>
+      <Switch>
+        <Route path="/" component={Home} />
+        <Route path="/author" component={AutorBox} />
+        <Route path="/book" />
+      </Switch>
+    </App>
   </BrowserRouter>,
   document.getElementById("root")
 );
