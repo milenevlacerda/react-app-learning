@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import AutorBox from './Autor'
+import BookBox from './Livro'
 import Home from './Home'
 import './index.css'
 
@@ -15,7 +16,7 @@ ReactDOM.render(
       <Switch>
         <Route path="/" component={Home} />
         <Route path="/author" component={AutorBox} />
-        <Route path="/book" />
+        <Route path="/book" component={BookBox} />
       </Switch>
     </App>
   </BrowserRouter>,

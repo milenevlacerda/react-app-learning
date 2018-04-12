@@ -35,7 +35,6 @@ class FormularioAutor extends Component {
     
 
     createAuthor(author)
-    
       .then(res => {
         console.log("cadastrado com sucesso!")
         PubSub.publish('atualiza-lista-autores', res)
